@@ -47,7 +47,7 @@ contract Ballot {
   }
   // Give `voter` the right to vote on this ballot.
   // May only be called by `chairperson`
-  function giveRightToVote(address voter) {
+  function giveRightToVote(address[] new_voters) {
     // If the right argument of `require` evaluates to `false`,
     // it terminates and reverts all changes to
     // the state and to Ether balances. It is often
@@ -55,8 +55,10 @@ contract Ballot {
     // called incorrectly. But watch out, this
     // will currently also consume all provided gas
     // (this is planned to change in the future).
-    require((msg.sender == chairperson) && !voters[voter].voted && (voters[voter].weight == 0));
-    voters[voter].weight = 1;
+    for (uint v = 0; new_voters.length; v++) {
+      require((msg.sender == chairperson) && !voters[new_voter[v]].voted && (voters[new_voters[v]].weight == 0));
+    voters[new_voter[v]].weight = 1;
+    }
   }
 
   /// Delegate your vote to the voter `to`
